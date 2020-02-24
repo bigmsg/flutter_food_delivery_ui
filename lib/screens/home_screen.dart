@@ -5,6 +5,8 @@ import 'package:flutter_food_delivery_ui/screens/restaurant_screen.dart';
 import 'package:flutter_food_delivery_ui/widgets/rating_stars.dart';
 import 'package:flutter_food_delivery_ui/widgets/recent_orders.dart';
 
+import 'cart_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -27,7 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.white,
               fontSize: 20.0,
             ),),
-          onPressed: () {},)
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => CartScreen()),
+            ),
+          )
 
         ],
       ),
