@@ -9,18 +9,70 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+
   @override
   Widget build(BuildContext context) {
+    double totalPrice = 0;
+    currentUser.cart.forEach(
+      (Order order) => totalPrice += order.quantity * order.food.price
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart (${currentUser.cart.length})'),
       ),
       body: ListView.separated(
-        itemCount: currentUser.cart.length,
+        itemCount: currentUser.cart.length + 1,
         itemBuilder: (BuildContext context, int index) {
-          Order order = currentUser.cart[index];
-
-          return _buildCartItem(order);
+          if (index < currentUser.cart.length) {
+            Order order = currentUser.cart[index];
+            return _buildCartItem(order);
+          } else {
+            return Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('배달 소요시간: ',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                      Text('25분',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.0,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('합계: ',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600
+                        ),
+                      ),
+                      Text(totalPrice.toStringAsFixed(2) + '원',
+                        style: TextStyle(
+                          color: Colors.green[700],
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 100.0,),
+                ],
+              ),
+            );
+          }
         },
         separatorBuilder: (BuildContext context, int index) {
           return Divider(
@@ -28,6 +80,33 @@ class _CartScreenState extends State<CartScreen> {
             color: Colors.grey,
           );
         },
+      ),
+      bottomSheet: Container(
+        height: 100.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0, -1),
+              blurRadius: 6.0,
+            ),
+          ],
+        ),
+        child: Center(
+          child: FlatButton(
+            child: Text('CHECKOUT',
+              style: TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 2.0
+              ),
+            ),
+            onPressed: () {},
+          ),
+        ),
       ),
     );
   }
@@ -60,7 +139,7 @@ class _CartScreenState extends State<CartScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          order.food.name,
+                          order.food.name + ' 안녕하세요?',
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -130,7 +209,7 @@ class _CartScreenState extends State<CartScreen> {
           Container(
             margin: EdgeInsets.all(10.0),
             child: Text(
-              '\$${order.quantity * order.food.price}',
+              '${order.quantity * order.food.price}원',
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,

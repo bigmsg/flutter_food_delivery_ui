@@ -9,7 +9,7 @@ final _burrito =
 final _steak =
     Food(imageUrl: 'assets/images/steak.jpg', name: 'Steak', price: 17.99);
 final _pasta =
-    Food(imageUrl: 'assets/images/pasta.jpg', name: 'Pasta Pasta Pasta Pasta Pasta Pasta', price: 14.99);
+    Food(imageUrl: 'assets/images/pasta.jpg', name: 'Pasta', price: 14.99);
 final _ramen =
     Food(imageUrl: 'assets/images/ramen.jpg', name: 'Ramen', price: 13.99);
 final _pancakes =
